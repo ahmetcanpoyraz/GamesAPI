@@ -1,15 +1,21 @@
 package com.example.gamesapi.ui.detail
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.gamesapi.BaseViewModel
+import com.example.gamesapi.data.local.GameDatabase
 import com.example.gamesapi.model.Results
+import kotlinx.coroutines.launch
+import java.util.*
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(application: Application) : BaseViewModel(application) {
 
     val gameLiveData = MutableLiveData<Results>()
-    fun getDataFromRoom(){
-        val game = Results(1,"","name","232",true,"dsa",2.2,2,2,"23,",2,2,2,2,"asda")
-        gameLiveData.value = game
-
+    fun getDataFromRoom(uuid: Int){
+            launch {
+                val dao = GameDatabase(getApplication()).gameDao()
+                val game = dao.getGame(uuid)
+                gameLiveData.value = game
+            }
     }
 }
