@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
             gameError.visibility = View.GONE
             gameLoading.visibility = View.VISIBLE
 
-            viewModel.refreshData()
+            viewModel.refreshFromAPI()
             swipeRefreshLayout.isRefreshing = false
         }
 

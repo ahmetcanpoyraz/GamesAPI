@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.gamesapi.R
+import com.example.gamesapi.util.downloadFromUrl
+import com.example.gamesapi.util.placeHolderProgressBar
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.item_game.*
 
@@ -32,12 +34,14 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
-        viewModel.getDataFromRoom()
 
         arguments?.let {
             gameId = DetailFragmentArgs.fromBundle(it).age
-       }
+        }
+        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        viewModel.getDataFromRoom(gameId)
+
+
 
         observeLiveData()
 
@@ -49,6 +53,10 @@ class DetailFragment : Fragment() {
                 detailName.text = game.name
                 detailRelaeseDate.text = game.released
                 detailMetacriticRate.text = game.metacritic.toString()
+                context?.let {
+                    detailImage.downloadFromUrl(game.backgroundImage, placeHolderProgressBar(it))
+                }
+
             }
         })
     }

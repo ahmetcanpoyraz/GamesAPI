@@ -38,8 +38,7 @@ class GamesAdapter (val gameList: ArrayList<Results>): RecyclerView.Adapter<Game
         holder.view.gameReleased.text = gameList[position].released
 
         holder.view.setOnClickListener{
-          //  val action = Navigation.
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(gameList[position].uuid)
             Navigation.findNavController(it).navigate(action)
         }
 
